@@ -31,6 +31,14 @@ namespace API
             {
                 dbContextOptionsBuilder.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
+            
+            // Add a new CORS policy to service collection
+            services.AddCors(opt => opt.AddPolicy("CorsPolicy", configurePolicy => 
+                {
+                    // Trust localhost:3000, accept any method (GET, POST, PUT, etc), any header
+                   configurePolicy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+                }));
+
             services.AddControllers();
         }
 
@@ -43,6 +51,9 @@ namespace API
             }
 
             // app.UseHttpsRedirection();
+
+             // Configure the app runtime to use the CORS policy registered in ConfigureServices as a middleware
+            app.UseCors("CorsPolicy");
 
             app.UseRouting();
 

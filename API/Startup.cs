@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Activities;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Persistence;
+
 namespace API
 {
     public class Startup
@@ -38,7 +41,10 @@ namespace API
                     // Trust localhost:3000, accept any method (GET, POST, PUT, etc), any header
                    configurePolicy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
                 }));
-
+            
+            // In C#, types are inherited from the System.Type 
+            // typeof() returns the System.Type at compile time
+            services.AddMediatR(typeof(List.Handler).Assembly);
             services.AddControllers();
         }
 

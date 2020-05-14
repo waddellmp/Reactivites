@@ -24,11 +24,14 @@ namespace API
                 {
                     var context = services.GetRequiredService<DataContext>();
                     context.Database.Migrate();
+                    
+                    // Programatically seed database by invoking the static method SeedData on the public Persistence Seed class.
+                    Seed.SeedData(context);
                 }
                 catch (Exception ex)
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError("An error occurred during migration");
+                    logger.LogError(ex.Message);
                 }
             }
             host.Run();
@@ -41,4 +44,5 @@ namespace API
                     webBuilder.UseStartup<Startup>();
                 });
     }
+    
 }

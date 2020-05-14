@@ -8,7 +8,6 @@ class App extends React.Component {
     };
 
     componentDidMount() {
-        // Initialize App state after a component mounts successfully
         axios.get('http://localhost:5000/api/values').then((response) => {
             this.setState({
                 values: response.data,
@@ -32,4 +31,5 @@ class App extends React.Component {
         );
     }
 }
+
 export default App;

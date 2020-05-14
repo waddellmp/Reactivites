@@ -9,10 +9,11 @@ namespace Persistence
         public DataContext(DbContextOptions options) : base(options)
         {
         }
-        
+        public DbSet<Activity> Activities { get; set; }
+
         public DbSet<Value> Values { get; set; }
         
-        // Seed data in db
+        // Seed data in database by EF hook
         protected override void OnModelCreating(ModelBuilder builder)
         {
             // Configure Value Entity as migration is being created

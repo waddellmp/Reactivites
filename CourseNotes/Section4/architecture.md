@@ -18,3 +18,15 @@ Examples: Activity
 The software in this layer contains application specific business rules. It encapsulates and implements all of the use cases of the system. These use cases orchestrate the flow of data to and from the entities, and direct those entities to use their enterprise wide business rules to achieve the goals of the use case.
 
 Examples: Application
+
+### Controllers, Gateways, Presenters
+
+Examples: API
+
+### Devices, DB, Web, UI
+
+---
+
+### Dependencies
+
+The Clean Architecture pattern states, "All dependencies should point inward. Meaning that an inner layer can't reference things outside of it.

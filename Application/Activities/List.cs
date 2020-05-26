@@ -1,39 +1,54 @@
-using System;
 using System.Collections.Generic;
-using MediatR;
-using Domain;
-using System.Threading.Tasks;
 using System.Threading;
-using Persistence;
+using System.Threading.Tasks;
+using Domain;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Persistence;
 
 namespace Application.Activities
 {
+    /*
+        List Overview
+        
+        The List class following the CQRS (command-query-responsibility-segregation) pattern.
+        
+        Query
+        A class member that implements the mediator interface IRequest<T>. Forms the query part
+        of the CQRS pattern.
+
+        Handler
+        A class member that implements the mediator interface IRequestHandler<Query, List<Activity>>. This forms the 
+        request handler for the query handling.
+
+            Handle(Query request, Cancellation ct)
+            A method used to pass in the Query instance and ct and return the result.
+        
+            Requires params:
+                Query request
+                CancellationToken ct
+    */
     public class List
     {
-        // To work with List, you will create an instance of the class member Query. Then pass it to mediator Send()
-        // The Send() method will invoke the Handler method, which returns a list of Activities
-        public class Query : IRequest<List<Activity>> 
+        // IRequest<T> returns a value
+        public class Query : IRequest<List<Activity>>
         {
-            
+
         }
 
         public class Handler : IRequestHandler<Query, List<Activity>>
         {
             private readonly DataContext _context;
-            
             private readonly ILogger<List> _logger;
-
-            public Handler(DataContext context, ILogger<List> logger)
+            public Handler (DataContext context, ILogger<List> logger)
             {
                 _context = context;
                 _logger = logger;
             }
-
-            public async Task<List<Activity>> Handle(Query request, CancellationToken ct)
+            public async Task<List<Activity>> Handle (Query request, CancellationToken ct)
             {
-                var activities = await _context.Activities.ToListAsync();
+                var activities = await _context.Activities.ToListAsync ();
                 // Testing out CancellationToken Implementation
                 // try
                 // {

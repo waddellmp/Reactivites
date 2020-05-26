@@ -5,24 +5,19 @@ using Domain;
 using MediatR;
 using Persistence;
 
-namespace Application.Activities
-{
-    
-    public class Create
-    {
-        public class Handler : IRequestHandler<Command>
-        {
+namespace Application.Activities {
+
+    public class Create {
+        // Implement IRequestHandler<T> to return a Task<Unit> type
+        public class Handler : IRequestHandler<Command> {
             private readonly DataContext _context;
 
-            public Handler(DataContext context)
-            {
+            public Handler (DataContext context) {
                 _context = context;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
-            {
-                var activity = new Activity
-                {
+            public async Task<Unit> Handle (Command request, CancellationToken cancellationToken) {
+                var activity = new Activity {
                     Id = request.Id,
                     Title = request.Title,
                     Description = request.Description,
@@ -30,23 +25,21 @@ namespace Application.Activities
                     City = request.City,
                     Date = request.Date,
                     Venue = request.Venue
-                    
+
                 };
 
-                _context.Activities.Add(activity);
-                var success = await _context.SaveChangesAsync() > 0;
-                
-                // Return value 
-                if(success) return Unit.Value;
-                
-                throw new Exception("Problem saving changes");
-                
+                _context.Activities.Add (activity);
+                var success = await _context.SaveChangesAsync () > 0;
+
+                if (success) return Unit.Value;
+
+                throw new Exception ("Problem saving changes");
+
             }
         }
-        
-        public class Command : IRequest
-        {
-            public Guid Id {get;set;}
+        // IRequest: the request does not return a value
+        public class Command : IRequest {
+            public Guid Id { get; set; }
 
             public string Title { get; set; }
 
@@ -55,7 +48,7 @@ namespace Application.Activities
             public string Category { get; set; }
 
             public DateTime Date { get; set; }
-        
+
             public string City { get; set; }
 
             public string Venue { get; set; }

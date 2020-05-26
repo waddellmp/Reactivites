@@ -41,7 +41,7 @@ namespace Application.Activities
         
         public class Command : IRequest
         {
-             public Guid Id {get;set;}
+            public Guid Id {get;set;}
 
             public string Title { get; set; }
 
